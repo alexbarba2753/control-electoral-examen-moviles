@@ -38,9 +38,11 @@ export class AuthService {
       return;
     }
     if (!this.promesaInicializacion) {
-      this.promesaInicializacion = this.cargarPerfilActual().finally(() => {
-        this._inicializado.set(true);
-      });
+      this.promesaInicializacion = this.cargarPerfilActual()
+        .then(() => undefined)
+        .finally(() => {
+          this._inicializado.set(true);
+        });
     }
     return this.promesaInicializacion;
   }
