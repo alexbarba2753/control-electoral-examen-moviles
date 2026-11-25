@@ -39,6 +39,8 @@ npx cap sync android
 
 Para generar el APK instalable, abrir la carpeta `android/` en Android Studio y ejecutar `Build > Build Bundle(s) / APK(s) > Build APK(s)`.
 
+El APK compilado listo para instalar en Android se encuentra disponible en [`apk/control-electoral.apk`](apk/control-electoral.apk).
+
 ## Configuración sin secretos
 
 La aplicación cliente utiliza únicamente la URL pública del proyecto y la clave pública `anon` de Supabase, siguiendo `ADR-002`. Las claves administrativas (`service_role`) nunca se incluyen en el código Ionic y operan únicamente dentro de las Edge Functions del servidor.
