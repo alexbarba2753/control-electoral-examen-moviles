@@ -1,0 +1,29 @@
+@if (cargando) {
+  <div class="estado-box">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p>{{ textoCarga }}</p>
+  </div>
+} @else if (error) {
+  <ion-card color="danger" class="estado-card">
+    <ion-card-content>
+      <div class="estado-row">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <div>
+          <strong>Error</strong>
+          <p>{{ error }}</p>
+        </div>
+      </div>
+      @if (mostrarReintentar) {
+        <ion-button fill="outline" color="light" size="small" (click)="reintentar.emit()">
+          <ion-icon slot="start" name="refresh-outline"></ion-icon>
+          Reintentar
+        </ion-button>
+      }
+    </ion-card-content>
+  </ion-card>
+} @else if (vacio) {
+  <div class="estado-box">
+    <ion-icon name="document-outline" class="icono-vacio"></ion-icon>
+    <p>{{ textoVacio }}</p>
+  </div>
+}

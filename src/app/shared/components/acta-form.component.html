@@ -1,0 +1,172 @@
+<form [formGroup]="form" (ngSubmit)="enviar()">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>{{ dignidad === 'alcalde' ? 'Alcaldia' : 'Prefectura' }}</ion-card-subtitle>
+      <ion-card-title>
+        {{ actaExistente ? 'Corregir acta registrada' : 'Registrar nueva acta' }}
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list lines="full" formArrayName="votosOrganizaciones">
+        @for (ctrl of votosArray.controls; track orgs[$index]?.id) {
+          <ion-item [formGroupName]="$index">
+            <ion-label position="stacked">
+              <span class="org-chip" [style.background]="orgs[$index].color_hex"></span>
+              <strong>{{ orgs[$index].lista }} · {{ orgs[$index].sigla }}</strong>
+              <div class="cand-nombre">{{ orgs[$index].nombre_candidato }}</div>
+            </ion-label>
+            <ion-input
+              type="number"
+              inputmode="numeric"
+              min="0"
+              formControlName="votos"
+              placeholder="0"
+            ></ion-input>
+          </ion-item>
+        }
+      </ion-list>
+
+      <ion-list lines="full" class="totales-lista">
+        <ion-item>
+          <ion-label position="stacked">Votos nulos</ion-label>
+          <ion-input type="number" inputmode="numeric" min="0" formControlName="nulos"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Votos blancos</ion-label>
+          <ion-input type="number" inputmode="numeric" min="0" formControlName="blancos"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Total de sufragantes</ion-label>
+          <ion-input
+            type="number"
+            inputmode="numeric"
+            min="0"
+            formControlName="total_sufragantes"
+          ></ion-input>
+        </ion-item>
+      </ion-list>
+
+      @let cuadre = obtenerResumenCuadre();
+      <div class="resumen-cuadre" [class.cuadra]="cuadre.esValido" [class.descuadra]="!cuadre.esValido">
+        <div class="cuadre-linea">
+          <span>Suma votos + nulos + blancos:</span>
+          <strong>{{ cuadre.sumaCalculada }}</strong>
+        </div>
+        <div class="cuadre-linea">
+          <span>Total de sufragantes:</span>
+          <strong>{{ cuadre.totalSufragantes }}</strong>
+        </div>
+        @if (cuadre.contieneValoresInvalidos) {
+          <ion-note color="danger">Todos los campos deben ser enteros mayores o iguales a 0.</ion-note>
+        } @else if (cuadre.esValido) {
+          <ion-badge color="success">
+            <ion-icon name="checkmark-circle-outline"></ion-icon> Totales consistentes
+          </ion-badge>
+        } @else {
+          <ion-badge color="danger">
+            <ion-icon name="warning-outline"></ion-icon>
+            Descuadre de {{ cuadre.diferencia > 0 ? '+' + cuadre.diferencia : cuadre.diferencia }} votos
+          </ion-badge>
+        }
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Evidencia fotografica y ubicacion GPS</ion-card-title>
+      <ion-card-subtitle>Se verifica nitidez local antes de aceptar la imagen</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="acciones-hardware">
+        <ion-button
+          type="button"
+          expand="block"
+          fill="outline"
+          [disabled]="capturandoFoto()"
+          (click)="capturarFoto()"
+        >
+          @if (capturandoFoto()) {
+            <ion-spinner name="dots" slot="start"></ion-spinner>
+          } @else {
+            <ion-icon slot="start" name="camera-outline"></ion-icon>
+          }
+          {{ fotoPreview() ? 'Repetir fotografia del acta' : 'Capturar fotografia del acta' }}
+        </ion-button>
+
+        <ion-button
+          type="button"
+          expand="block"
+          fill="outline"
+          color="secondary"
+          [disabled]="capturandoGps()"
+          (click)="capturarGps()"
+        >
+          @if (capturandoGps()) {
+            <ion-spinner name="dots" slot="start"></ion-spinner>
+          } @else {
+            <ion-icon slot="start" name="location-outline"></ion-icon>
+          }
+          {{ coordenadas() ? 'Actualizar ubicacion GPS' : 'Obtener ubicacion GPS' }}
+        </ion-button>
+      </div>
+
+      @if (errorFoto()) {
+        <div class="alerta-error">{{ errorFoto() }}</div>
+      }
+
+      @if (resultadoNitidez(); as nitidez) {
+        <div class="estado-nitidez" [class.ok]="nitidez.esNitida" [class.mal]="!nitidez.esNitida">
+          @if (nitidez.esNitida) {
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            <span>Fotografia nitida aceptada (puntaje {{ nitidez.puntaje }} / minimo {{ nitidez.umbral }})</span>
+          } @else {
+            <ion-icon name="warning-outline"></ion-icon>
+            <span>
+              Fotografia borrosa rechazada (puntaje {{ nitidez.puntaje }} / minimo {{ nitidez.umbral }}).
+              Tome una nueva foto enfocada y con buena iluminacion.
+            </span>
+          }
+        </div>
+      }
+
+      @if (fotoPreview(); as imgSrc) {
+        <img [src]="imgSrc" alt="Vista previa del acta" class="foto-preview" />
+      }
+
+      @if (errorGps()) {
+        <div class="alerta-error">{{ errorGps() }}</div>
+      }
+
+      @if (coordenadas(); as gps) {
+        <div class="gps-box">
+          <strong>Coordenadas registradas:</strong>
+          <span>Lat: {{ gps.latitud }} | Lng: {{ gps.longitud }}</span>
+          @if (gps.precision !== null) {
+            <span>Precision aprox.: {{ gps.precision }} m</span>
+          }
+        </div>
+      }
+    </ion-card-content>
+  </ion-card>
+
+  <div class="boton-guardar-wrap">
+    <ion-button
+      type="submit"
+      expand="block"
+      color="primary"
+      [disabled]="!puedeGuardar()"
+    >
+      @if (guardando) {
+        <ion-spinner name="crescent" slot="start"></ion-spinner>
+        Guardando acta...
+      } @else {
+        <ion-icon slot="start" name="save-outline"></ion-icon>
+        {{ actaExistente ? 'Guardar correccion de acta' : 'Guardar acta' }}
+      }
+    </ion-button>
+  </div>
+</form>

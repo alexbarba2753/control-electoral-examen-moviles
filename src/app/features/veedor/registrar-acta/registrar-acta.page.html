@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="rutaRetorno()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      @if (jrv(); as mesa) {
+        JRV #{{ mesa.numero }} · {{ dignidad() === 'alcalde' ? 'Alcalde' : 'Prefecto' }}
+      } @else {
+        Registro de acta
+      }
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="contenedor">
+    <app-estado-vista
+      [cargando]="cargando()"
+      [error]="error()"
+      [vacio]="false"
+      (reintentar)="cargarDatos()"
+    ></app-estado-vista>
+
+    @if (!cargando() && !error() && jrv(); as mesa) {
+      <app-acta-form
+        [jrvId]="mesa.id"
+        [recintoId]="mesa.recinto_id"
+        [dignidad]="dignidad()"
+        [orgs]="organizaciones()"
+        [actaExistente]="actaExistente()"
+        [guardando]="guardando()"
+        (guardar)="guardarActa($event)"
+      ></app-acta-form>
+    }
+  </div>
+</ion-content>
