@@ -44,8 +44,8 @@ Condiciones técnicas obligatorias:
 * **Aceptación/rechazo y verificación humana:** Aceptado tras validar compatibilidad con requisitos R8–R9 y experiencia del grupo.
 
 ## Trazabilidad
-* Commit de ADR: `[Enlace o hash al commit en docs/adr/ADR-001-framework-ionic-angular.md]`
-* Commit de implementación: `[Enlace o hash al commit de inicialización del proyecto]`
+* Commit de ADR: `cc51015` (https://github.com/alexbarba2753/control-electoral-examen-moviles/commit/cc51015)
+* Commit de implementación: `0bf5085` (https://github.com/alexbarba2753/control-electoral-examen-moviles/commit/0bf5085), `5b4cd04` (https://github.com/alexbarba2753/control-electoral-examen-moviles/commit/5b4cd04)
 
 ## Consenso del equipo
 * **Alex Mateo Barba Gavidia:** Propuso Angular Standalone destacando el dominio previo en el curso, formularios reactivos, guards por rol, servicios para R9 y mitigación de curva inicial mediante estructura común.

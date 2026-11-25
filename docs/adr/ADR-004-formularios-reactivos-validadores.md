@@ -47,8 +47,8 @@ Se elige **Angular Reactive Forms** acompañado de **validadores puros reutiliza
 * **Aceptación/rechazo y verificación humana:** Aceptado y verificado frente a casos borde de casteo numérico en `IonInput`.
 
 ## Trazabilidad
-* Commit de ADR: `[Enlace o hash al commit en docs/adr/ADR-004-formularios-reactivos-validadores.md]`
-* Commit de implementación: `[Enlace o hash al commit de validadores en shared/validators]`
+* Commit de ADR: `253cee5` (https://github.com/alexbarba2753/control-electoral-examen-moviles/commit/253cee5)
+* Commit de implementación: `626e5ea` (validadores puros y pruebas unitarias en `shared/validators`), `e713739` (formulario reactivo de actas)
 
 ## Consenso del equipo
 * **Gabriel Emilio Toaquiza Saenz:** Expuso las validaciones críticas (cédula módulo 10, cuadre matemático de actas y cambio de clave), destacando reutilización, pruebas unitarias y control de estado.

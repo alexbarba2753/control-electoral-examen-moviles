@@ -44,8 +44,8 @@ Se adopta una **arquitectura por dominios y capas** bajo `src/app/`:
 * **Aceptación/rechazo y verificación humana:** Aceptado y adaptado a la regla de prohibición de llamadas directas al backend desde páginas.
 
 ## Trazabilidad
-* Commit de ADR: `[Enlace o hash al commit en docs/adr/ADR-003-arquitectura-capas-dominios.md]`
-* Commit de implementación: `[Enlace o hash al commit de estructura base de carpetas]`
+* Commit de ADR: `f17f660` (https://github.com/alexbarba2753/control-electoral-examen-moviles/commit/f17f660)
+* Commit de implementación: `fce9b0e` (modelos), `02c119e` (módulo auth y shared), `1d7e169` (provincial), `e8f5342` (recinto), `e713739` (veedor)
 
 ## Consenso del equipo
 * **Gabriel Emilio Toaquiza Saenz:** Presentó la propuesta destacando trazabilidad, bajo acoplamiento, prohibición de acceso directo al backend desde páginas y alineación con R4, R5, R6, R8 y R9.

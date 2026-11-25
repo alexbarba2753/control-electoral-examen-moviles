@@ -46,8 +46,8 @@ Condiciones técnicas:
 * **Aceptación/rechazo y verificación humana:** Aceptado tras comprobar que no requiere librerías externas y opera sin Internet.
 
 ## Trazabilidad
-* Commit de ADR: `[Enlace o hash al commit en docs/adr/ADR-005-camara-gps-nitidez-capacitor.md]`
-* Commit de implementación: `[Enlace o hash al commit de servicio cámara, GPS y nitidez]`
+* Commit de ADR: `82251a2` (https://github.com/alexbarba2753/control-electoral-examen-moviles/commit/82251a2)
+* Commit de implementación: `63ade0f` (servicios de cámara, GPS y nitidez), `70a6ac0` (plataforma Android y permisos en `AndroidManifest.xml`)
 
 ## Consenso del equipo
 * **Emilia Alejandra Tana Puga:** Presentó la propuesta defendiendo plugins oficiales de Capacitor y validación local de nitidez con Canvas y varianza del Laplaciano sin Internet ni servicios externos.

@@ -47,8 +47,8 @@ Condiciones técnicas obligatorias:
 * **Aceptación/rechazo y verificación humana:** Aceptado tras contrastar consultas SQL del dashboard y políticas RLS exigidas por R8.
 
 ## Trazabilidad
-* Commit de ADR: `[Enlace o hash al commit en docs/adr/ADR-002-backend-supabase.md]`
-* Commit de implementación: `[Enlace o hash al commit de esquema SQL y cliente Supabase]`
+* Commit de ADR: `1eae94e` (https://github.com/alexbarba2753/control-electoral-examen-moviles/commit/1eae94e)
+* Commit de implementación: `5b168b8` (esquema SQL), `ac3b26a` (políticas RLS y Storage), `8fe1d91` (Edge Functions), `94d8a76` (cliente Supabase y Auth), `8a468a5` (prueba RLS R8)
 
 ## Consenso del equipo
 * **Alex Mateo Barba Gavidia:** Propuso Supabase argumentando la naturaleza relacional de los datos, consultas SQL para el dashboard, seguridad RLS y almacenamiento gratuito, advirtiendo el límite de correos.

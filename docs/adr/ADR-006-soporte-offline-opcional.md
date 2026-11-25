@@ -44,8 +44,8 @@ Condiciones técnicas:
 * **Aceptación/rechazo y verificación humana:** Aceptado tras analizar la ponderación de la rúbrica y los tiempos reales del equipo.
 
 ## Trazabilidad
-* Commit de ADR: `[Enlace o hash al commit en docs/adr/ADR-006-soporte-offline-opcional.md]`
-* Commit de implementación: `[N/A en línea base o commit de extensión si aplica]`
+* Commit de ADR: `ab8324e` (https://github.com/alexbarba2753/control-electoral-examen-moviles/commit/ab8324e)
+* Commit de implementación: `94d8a76` (manejo controlado de errores de red en `SupabaseService`; soporte offline diferido como mejora opcional fuera de la línea base)
 
 ## Consenso del equipo
 * **Emilia Alejandra Tana Puga:** Propuso `IndexedDB` y `Capacitor Network` para almacenamiento temporal y sincronización posterior evitando pérdida de datos sin Internet.
