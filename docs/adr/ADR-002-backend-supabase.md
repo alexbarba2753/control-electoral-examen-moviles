@@ -48,7 +48,7 @@ Condiciones técnicas obligatorias:
 
 ## Trazabilidad
 * Commit de ADR: `1eae94e` (https://github.com/alexbarba2753/control-electoral-examen-moviles/commit/1eae94e)
-* Commit de implementación: `5b168b8` (esquema SQL), `ac3b26a` (políticas RLS y Storage), `8fe1d91` (Edge Functions), `94d8a76` (cliente Supabase y Auth), `8a468a5` (prueba RLS R8)
+* Commit de implementación: `5b168b8` (esquema SQL), `ac3b26a` (políticas RLS y Storage), `8fe1d91` (Edge Functions), `94d8a76` (cliente Supabase y Auth)
 
 ## Consenso del equipo
 * **Alex Mateo Barba Gavidia:** Propuso Supabase argumentando la naturaleza relacional de los datos, consultas SQL para el dashboard, seguridad RLS y almacenamiento gratuito, advirtiendo el límite de correos.

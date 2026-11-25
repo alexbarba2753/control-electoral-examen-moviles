@@ -48,7 +48,7 @@ Se elige **Angular Reactive Forms** acompañado de **validadores puros reutiliza
 
 ## Trazabilidad
 * Commit de ADR: `253cee5` (https://github.com/alexbarba2753/control-electoral-examen-moviles/commit/253cee5)
-* Commit de implementación: `626e5ea` (validadores puros y pruebas unitarias en `shared/validators`), `e713739` (formulario reactivo de actas)
+* Commit de implementación: `626e5ea` (validadores puros en `shared/validators`), `e713739` (formulario reactivo de actas)
 
 ## Consenso del equipo
 * **Gabriel Emilio Toaquiza Saenz:** Expuso las validaciones críticas (cédula módulo 10, cuadre matemático de actas y cambio de clave), destacando reutilización, pruebas unitarias y control de estado.

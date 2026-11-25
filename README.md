@@ -11,8 +11,22 @@ Aplicación móvil desarrollada con **Ionic Angular (Standalone)**, **Capacitor*
 
 ## Instalación y ejecución local
 
+1. Instalar dependencias:
+
 ```bash
 npm install
+```
+
+2. Crear los archivos de entorno locales a partir del ejemplo (`src/environments/environment.example.ts`):
+
+```bash
+cp src/environments/environment.example.ts src/environments/environment.ts
+cp src/environments/environment.example.ts src/environments/environment.prod.ts
+```
+
+3. Completar `supabaseUrl` y `supabaseAnonKey` en ambos archivos (están ignorados por `.gitignore` para no subir credenciales de entorno al repositorio) y ejecutar:
+
+```bash
 ionic serve
 ```
 
@@ -74,23 +88,11 @@ Estructura de carpetas bajo `src/app/`:
 - `actas` y `acta_votos`: registro por `(jrv_id, dignidad)` con votos por organización, nulos, blancos, total de sufragantes, ruta de foto en Storage privado, puntaje de nitidez y coordenadas GPS (`latitud`, `longitud`, `precision_gps`).
 - **Políticas RLS:** todas las tablas tienen Row Level Security activo. Un veedor únicamente puede leer sus JRV asignadas (`veedor_id = auth.uid()`) y únicamente puede insertar/actualizar actas y fotografías de sus propias mesas; cualquier intento sobre una mesa ajena es rechazado por PostgreSQL con código `42501`.
 
-## Pruebas
+## Pruebas y verificación
 
-### Pruebas unitarias (validadores de negocio)
-
-```bash
-npm run test:unit
-```
-
-Verifica validación de cédula ecuatoriana (provincia `01-24`, tercer dígito `< 6`, módulo 10), consistencia matemática del acta con conversión numérica `Number()` y bloqueo de reutilización de `Ecuador2026`.
-
-### Prueba de seguridad RLS en backend (R8)
-
-```bash
-node supabase/tests/test-rls-veedor.mjs
-```
-
-Demuestra con sesiones reales de dos veedores distintos que el Veedor 1 solo recibe sus JRV asignadas, obtiene 0 filas al consultar la JRV del Veedor 2 y recibe un error de política RLS (`42501`) al intentar registrar un acta en una mesa ajena.
+- **Validaciones de formularios (R2, R3, R6):** comprobación manual de cédula ecuatoriana válida e inválida, rechazo de reutilización de `Ecuador2026` y bloqueo del guardado cuando la suma de votos, nulos y blancos no coincide con el total de sufragantes.
+- **Seguridad RLS en backend (R8):** verificación iniciando sesión con Veedor 1 (`1710034081`) y Veedor 2 (`1710034099`) comprobando que cada uno visualiza únicamente su JRV asignada y que PostgreSQL rechaza con código `42501` cualquier intento de escritura en una mesa ajena.
+- **Cámara, nitidez y GPS (R7):** captura desde cámara, rechazo de fotografías borrosas bajo el umbral calibrado del Laplaciano y registro de coordenadas `latitud`, `longitud` y `precision_gps`.
 
 ## Credenciales de demostración (datos ficticios de prueba)
 
@@ -114,4 +116,4 @@ Demuestra con sesiones reales de dos veedores distintos que el Veedor 1 solo rec
   - Se aceptó el uso de Edge Functions en Supabase para el inicio de sesión por cédula y la creación de usuarios con `service_role` exclusivamente en servidor.
   - Se descartó el uso de librerías pesadas de estado global (NgRx) y de análisis de imágenes (OpenCV.js) para mantener el proyecto liviano y manejable en el plazo del examen.
   - Se corrigieron incompatibilidades detectadas al compilar con Ionic 9 / Angular 22 (importaciones standalone directas desde `@ionic/angular` y tipado estricto de promesas en `AuthService`).
-  - Todo el comportamiento se validó ejecutando `npm run build`, pruebas unitarias (`npm run test:unit`), sincronización con Android (`npx cap sync android`) y la prueba real de aislamiento RLS contra Supabase (`node supabase/tests/test-rls-veedor.mjs`).
+  - Todo el comportamiento se validó ejecutando `npm run build`, sincronización con Android (`npx cap sync android`) y pruebas funcionales de los tres roles y aislamiento RLS en Supabase.
